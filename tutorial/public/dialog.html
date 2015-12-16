@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="/scripts/react-draggable.js"></script>
+  <script src="/scripts/classname.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <title>Document</title>
+  <style>
+    .dialog{
+      width: 280px;
+      height: 380px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      box-shadow: 3px 3px 12px -3px rgba(0, 0, 0, 0.4);
+    }
+    .hidden { display:none; }
+  </style>
+  <script type="text/babel">
+
+var Dialog = React.createClass({
+    getInitialState: function() {
+        return { shouldHide: true };
+    },
+    // handleStart: function (event, ui) {
+    //     console.log('Event: ', event);
+    //     console.log('Position: ', ui.position);
+    // },
+
+    // handleDrag: function (event, ui) {
+    //     console.log('Event: ', event);
+    // console.log('Position: ', ui.position);
+    // },
+
+    // handleStop: function (event, ui) {
+    //     console.log('Event: ', event);
+    // console.log('Position: ', ui.position);
+    // },
+
+    open: function(){
+      this.setState({shouldHide: false});
+    },
+    close: function(){
+      this.setState({shouldHide: true});
+    },
+    render: function () {
+        var dialogClass = classNames({
+          'dialog panel panel-default': true,
+          'hidden': this.state.shouldHide
+        });
+        return (
+            <ReactDraggable
+                // axis="x"
+                handle=".panel-heading"
+                start={{x: 0, y: 0}}
+                // grid={[25, 25]}
+                zIndex={100}
+                onStart={this.handleStart}
+                onDrag={this.handleDrag}
+                onStop={this.handleStop}>
+                <div className={dialogClass}>
+                    <div className="panel-heading">Drag from here <button className="btn btn-xs btn-danger pull-right" onClick={this.close}><i className="fa fa-times"></i></button></div>
+                    <div className="panel-body">This readme is really dragging on...</div>
+                </div>
+            </ReactDraggable>
+        );
+    }
+});
+
+$(function(){
+  var dialog = ReactDOM.render(<Dialog />, document.getElementById('dialog-wrapper'));
+  $('.btn.open').on('click', function(e){
+    dialog.open();
+  });
+});
+
+</script>
+
+</head>
+<body>
+  <div>bbbb</div>
+  <div><button class="btn btn-default open">開く</button></div>
+  <div id="dialog-wrapper"></div>
+
+</body>
+</html>
