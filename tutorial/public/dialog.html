@@ -8,6 +8,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="/scripts/react-draggable.js"></script>
   <script src="/scripts/classname.js"></script>
+  <script src="/scripts/dialog.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -24,55 +25,6 @@
     .hidden { display:none; }
   </style>
   <script type="text/babel">
-
-var Dialog = React.createClass({
-    getInitialState: function() {
-        return { shouldHide: true };
-    },
-    // handleStart: function (event, ui) {
-    //     console.log('Event: ', event);
-    //     console.log('Position: ', ui.position);
-    // },
-
-    // handleDrag: function (event, ui) {
-    //     console.log('Event: ', event);
-    // console.log('Position: ', ui.position);
-    // },
-
-    // handleStop: function (event, ui) {
-    //     console.log('Event: ', event);
-    // console.log('Position: ', ui.position);
-    // },
-
-    open: function(){
-      this.setState({shouldHide: false});
-    },
-    close: function(){
-      this.setState({shouldHide: true});
-    },
-    render: function () {
-        var dialogClass = classNames({
-          'dialog panel panel-default': true,
-          'hidden': this.state.shouldHide
-        });
-        return (
-            <ReactDraggable
-                // axis="x"
-                handle=".panel-heading"
-                start={{x: 0, y: 0}}
-                // grid={[25, 25]}
-                zIndex={100}
-                onStart={this.handleStart}
-                onDrag={this.handleDrag}
-                onStop={this.handleStop}>
-                <div className={dialogClass}>
-                    <div className="panel-heading">Drag from here <button className="btn btn-xs btn-danger pull-right" onClick={this.close}><i className="fa fa-times"></i></button></div>
-                    <div className="panel-body">This readme is really dragging on...</div>
-                </div>
-            </ReactDraggable>
-        );
-    }
-});
 
 $(function(){
   var dialog = ReactDOM.render(<Dialog />, document.getElementById('dialog-wrapper'));
