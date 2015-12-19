@@ -1,4 +1,9 @@
-Dialog = React.createClass({
+var classNames = require('classnames');
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Draggable = require('react-draggable');
+
+module.exports = React.createClass({
     getInitialState: function() {
         return { shouldHide: true };
     },
@@ -29,7 +34,7 @@ Dialog = React.createClass({
           'hidden': this.state.shouldHide
         });
         return (
-            <ReactDraggable
+            <Draggable
                 // axis="x"
                 handle=".panel-heading"
                 start={{x: 0, y: 0}}
@@ -42,7 +47,7 @@ Dialog = React.createClass({
                     <div className="panel-heading">Drag from here <button className="btn btn-xs btn-danger pull-right" onClick={this.close}><i className="fa fa-times"></i></button></div>
                     <div className="panel-body">This readme is really dragging on...</div>
                 </div>
-            </ReactDraggable>
+            </Draggable>
         );
     }
 });
