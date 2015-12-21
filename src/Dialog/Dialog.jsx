@@ -2,6 +2,7 @@ var classNames = require('classnames');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Draggable = require('react-draggable');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 module.exports = React.createClass({
     getInitialState: function() {
@@ -33,6 +34,12 @@ module.exports = React.createClass({
           'dialog panel panel-default': true,
           'hidden': this.state.shouldHide
         });
+
+        var items = [];
+        if(!this.state.shouldHide){
+            items.push("aaaa");
+        }
+
         return (
             <Draggable
                 // axis="x"
@@ -45,7 +52,14 @@ module.exports = React.createClass({
                 onStop={this.handleStop}>
                 <div className={dialogClass}>
                     <div className="panel-heading">Drag from here <button className="btn btn-xs btn-danger pull-right" onClick={this.close}><i className="fa fa-times"></i></button></div>
-                    <div className="panel-body">This readme is really dragging on...</div>
+                    <div className="panel-body">
+                        <ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+                            {items.map(function(value){
+                                var key = Date.now();
+                                return <div key={key}>{value}</div>
+                            })}
+                        </ReactCSSTransitionGroup>
+                    </div>
                 </div>
             </Draggable>
         );

@@ -2,6 +2,7 @@ var classNames = require('classnames');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Draggable = require('react-draggable');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 module.exports = React.createClass({displayName: "exports",
     getInitialState: function() {
@@ -33,6 +34,12 @@ module.exports = React.createClass({displayName: "exports",
           'dialog panel panel-default': true,
           'hidden': this.state.shouldHide
         });
+
+        var items = [];
+        if(!this.state.shouldHide){
+            items.push("aaaa");
+        }
+
         return (
             React.createElement(Draggable, {
                 // axis="x"
@@ -45,7 +52,14 @@ module.exports = React.createClass({displayName: "exports",
                 onStop: this.handleStop}, 
                 React.createElement("div", {className: dialogClass}, 
                     React.createElement("div", {className: "panel-heading"}, "Drag from here ", React.createElement("button", {className: "btn btn-xs btn-danger pull-right", onClick: this.close}, React.createElement("i", {className: "fa fa-times"}))), 
-                    React.createElement("div", {className: "panel-body"}, "This readme is really dragging on...")
+                    React.createElement("div", {className: "panel-body"}, 
+                        React.createElement(ReactCSSTransitionGroup, {transitionName: "example", transitionEnterTimeout: 500, transitionLeaveTimeout: 300}, 
+                            items.map(function(value){
+                                var key = Date.now();
+                                return React.createElement("div", {key: key}, value)
+                            })
+                        )
+                    )
                 )
             )
         );
