@@ -2,11 +2,16 @@ var classNames = require('classnames');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Draggable = require('react-draggable');
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+
+var FirstView = require('./FirstView.js')
+
 
 module.exports = React.createClass({displayName: "exports",
     getInitialState: function() {
-        return { shouldHide: true };
+        return {
+            shouldHide: true,
+            children: []
+        };
     },
     // handleStart: function (event, ui) {
     //     console.log('Event: ', event);
@@ -23,6 +28,10 @@ module.exports = React.createClass({displayName: "exports",
     // console.log('Position: ', ui.position);
     // },
 
+    addChild: function(childView){
+        this.setState({children: [childView]});
+    },
+
     open: function(){
       this.setState({shouldHide: false});
     },
@@ -31,15 +40,11 @@ module.exports = React.createClass({displayName: "exports",
     },
     render: function () {
         var dialogClass = classNames({
-          'dialog panel panel-default': true,
+          'dialog': true,
           'hidden': this.state.shouldHide
         });
 
-        var items = [];
-        if(!this.state.shouldHide){
-            items.push("aaaa");
-        }
-
+        var key = 0;
         return (
             React.createElement(Draggable, {
                 // axis="x"
@@ -50,16 +55,12 @@ module.exports = React.createClass({displayName: "exports",
                 onStart: this.handleStart, 
                 onDrag: this.handleDrag, 
                 onStop: this.handleStop}, 
-                React.createElement("div", {className: dialogClass}, 
-                    React.createElement("div", {className: "panel-heading"}, "Drag from here ", React.createElement("button", {className: "btn btn-xs btn-danger pull-right", onClick: this.close}, React.createElement("i", {className: "fa fa-times"}))), 
-                    React.createElement("div", {className: "panel-body"}, 
-                        React.createElement(ReactCSSTransitionGroup, {transitionName: "example", transitionEnterTimeout: 500, transitionLeaveTimeout: 300}, 
-                            items.map(function(value){
-                                var key = Date.now();
-                                return React.createElement("div", {key: key}, value)
-                            })
-                        )
-                    )
+                React.createElement("div", {className: dialogClass, ref: "wrapper"}, 
+                    React.createElement(FirstView, {onAddChild: this.addChild}), 
+                    this.state.children.map(function(ChildView){
+                        var key = key + 1;
+                        return (React.createElement(ChildView, {key: key}));
+                    })
                 )
             )
         );
