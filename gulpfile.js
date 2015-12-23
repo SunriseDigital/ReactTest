@@ -7,7 +7,7 @@ var webserver = require('gulp-webserver');
 var fs = require("fs");
 
 gulp.task('dialog', function() {
-  browserify('src/dialog.jsx', {
+  browserify('src/Dialog/app.jsx', {
       debug: true,
       extensions: ['.jsx']
     })
@@ -28,7 +28,7 @@ gulp.task('webserver', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(['src/*.jsx', 'src/**/*.jsx'], ['dialog']);
+  gulp.watch(['src/Dialog/*.jsx', 'src/Dialog/**/*.jsx'], ['dialog']);
 });
 
 gulp.task('default', ['watch', 'webserver']);

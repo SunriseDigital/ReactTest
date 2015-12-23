@@ -1,4 +1,4 @@
-import Dialog from './Dialog/Dialog';
+import Dialog from './components/Dialog';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
