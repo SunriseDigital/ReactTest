@@ -1,4 +1,4 @@
-var Dialog = require('./Dialog/Dialog.js');
+var Dialog = require('./Dialog/Dialog.jsx');
 var React = require('react');
 var ReactDOM = require('react-dom');
 

@@ -1,45 +1,18 @@
 'use strict';
 
 var gulp = require('gulp');
-var sass = require('gulp-sass');
-var react = require('gulp-react');
-var browserify = require('gulp-browserify');
-var plumber = require('gulp-plumber');
+var browserify = require('browserify');
 
-
-var sassFiles = ['sass/*.scss', 'sass/**/*.scss'];
-gulp.task('sass', function () {
-  gulp.src(sassFiles)
-    .pipe(plumber())
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('web/css'));
-});
-
-var jsFiles = ['src/*.jsx', 'src/**/*.jsx'];
-gulp.task('react', function() {
-  gulp.src(jsFiles)
-    .pipe(plumber())
-    .pipe(react())
-    .pipe(gulp.dest('js/'));
-});
+var fs = require("fs");
 
 gulp.task('dialog', function() {
-  gulp.src('js/dialog.js')
-    .pipe(plumber())
-    .pipe(browserify({
-      insertGlobals : false,
-      debug : false
-    }))
-    .pipe(gulp.dest('web/js/'));
+  browserify('src/dialog.jsx', { debug: true })
+    .transform("babelify", {presets: ["es2015", "react"]})
+    .bundle()
+    .on("error", function (err) { console.log("Error : " + err.message); })
+    .pipe(fs.createWriteStream("web/js/dialog.js"))
 });
 
 gulp.task('default', function() {
-  // gulp.watch(sassFiles, ['sass']);
-  gulp.watch([jsFiles, sassFiles, 'js/dialog.js'], ['sass', 'react', 'dialog']);
+  gulp.watch(['src/*.jsx', 'src/**/*.jsx'], ['dialog']);
 });
-
-
-
-// gulp.task('sass:watch', function () {
-//   gulp.watch('./tutorial/sass/**/*.scss', ['sass']);
-// });

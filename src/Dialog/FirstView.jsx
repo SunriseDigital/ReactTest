@@ -2,7 +2,7 @@ var classNames = require('classnames');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Draggable = require('react-draggable');
-var SecondView = require('./SecondView.js')
+var SecondView = require('./SecondView.jsx')
 
 module.exports = React.createClass({
     getInitialState: function() {

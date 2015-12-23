@@ -3,7 +3,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Draggable = require('react-draggable');
 
-var FirstView = require('./FirstView.js')
+var FirstView = require('./FirstView.jsx')
 
 
 module.exports = React.createClass({
