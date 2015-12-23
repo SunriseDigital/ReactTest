@@ -13,7 +13,7 @@ gulp.task('dialog', function() {
     })
     .transform("babelify", {presets: ["es2015", "react"]})
     .bundle()
-    .on("error", function (err) { console.log("Error : " + err.message); })
+    .on("error", function (err) { console.log("Error : " + err.message, err); })
     .pipe(fs.createWriteStream("web/js/dialog.js"))
 });
 
@@ -28,7 +28,7 @@ gulp.task('webserver', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(['src/Dialog/*.jsx', 'src/Dialog/**/*.jsx'], ['dialog']);
+  gulp.watch(['src/Dialog/*', 'src/Dialog/**/*'], ['dialog']);
 });
 
 gulp.task('default', ['watch', 'webserver']);

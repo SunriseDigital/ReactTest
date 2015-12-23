@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import React from 'react';
 import Draggable from 'react-draggable';
 import FirstView from './FirstView';
+import DialogStore from '../stores/Dialog';
+console.log(DialogStore);
 
 export default class Dialog extends React.Component
 {
@@ -23,6 +25,14 @@ export default class Dialog extends React.Component
 
   close(){
     this.setState({shouldHide: true});
+  }
+
+  componentWillMount() {
+      DialogStore.addCloseListener(this.close.bind(this));
+  }
+
+  componentWillUnmount() {
+      DialogStore.removeCloseListener(this.close.bind(this));
   }
 
   render(){
