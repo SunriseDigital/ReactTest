@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import Draggable from 'react-draggable';
-import SecondView from './SecondView.jsx';
+import SecondView from './SecondView';
 
 export default class FirstView extends React.Component
 {

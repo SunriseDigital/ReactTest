@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 import Draggable from 'react-draggable';
-import FirstView from './FirstView.jsx';
+import FirstView from './FirstView';
 
 export default class Dialog extends React.Component
 {
