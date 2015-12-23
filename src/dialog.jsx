@@ -1,6 +1,6 @@
-var Dialog = require('./Dialog/Dialog.jsx');
-var React = require('react');
-var ReactDOM = require('react-dom');
+import Dialog from './Dialog/Dialog.jsx';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 $(function(){
   var dialog = ReactDOM.render(<Dialog />, document.getElementById('dialog-wrapper'));
