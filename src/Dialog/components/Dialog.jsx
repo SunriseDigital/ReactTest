@@ -3,6 +3,7 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import FirstView from './FirstView';
 import DialogStore from '../stores/Dialog';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 export default class Dialog extends React.Component
 {
@@ -20,11 +21,11 @@ export default class Dialog extends React.Component
   }
 
   componentWillMount() {
-      DialogStore.addChangeListener(this.onStoreChange.bind(this));
+    DialogStore.addChangeListener(this.onStoreChange.bind(this));
   }
 
   componentWillUnmount() {
-      DialogStore.removeChangeListener(this.onStoreChange.bind(this));
+    DialogStore.removeChangeListener(this.onStoreChange.bind(this));
   }
 
   render(){
@@ -46,7 +47,12 @@ export default class Dialog extends React.Component
         onDrag={this.handleDrag}
         onStop={this.handleStop}>
         <div className={dialogClass} ref="wrapper">
-            <FirstView onAddChild={this.addChild.bind(this)} />
+            <FirstView />
+            <ReactCSSTransitionGroup transitionName="push" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+            {this.state.children.map(function(View, key){
+              return (<View key={key} />)
+            })}
+            </ReactCSSTransitionGroup>
         </div>
       </Draggable>
     );

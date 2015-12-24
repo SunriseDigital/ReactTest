@@ -6,13 +6,9 @@ class DialogStore extends Events.EventEmitter
   constructor() {
     super();
     this.isOpen = false;
+    this.children = [];
     this.dispatchToken = Dispatcher.register(function(payload){
-      console.log('call handler in store');
-      var methodName = 'handle' + payload.type;
-      if(!this[methodName]){
-        throw 'Missing handling method '+ methodName;
-      }
-      this[methodName](payload);
+      Dispatcher.callHandler(this, payload);
     }.bind(this));
   }
 
@@ -26,9 +22,20 @@ class DialogStore extends Events.EventEmitter
     this.emit('change');
   }
 
+  handlePushView(payload){
+    this.children.push(payload.view);
+    this.emit('change');
+  }
+
+  handlePopView(payload){
+    this.children.pop();
+    this.emit('change');
+  }
+
   getState(){
     return {
-      'isOpen': this.isOpen
+      'isOpen': this.isOpen,
+      'children': this.children
     };
   }
 

@@ -12,11 +12,13 @@
     .dialog{
       width: 280px;
       height: 380px;
+      overflow: hidden;
       position: absolute;
       top: 0;
       left: 0;
       box-shadow: 3px 3px 12px -3px rgba(0, 0, 0, 0.4);
     }
+
     .hidden { display:none; }
 
     .dialog .panel{
@@ -31,18 +33,26 @@
       opacity: 0.01;
     }
 
-    .example-enter.example-enter-active {
-      opacity: 1;
-      transition: opacity 500ms ease-in;
+    .push-enter,
+    .push-leave
+    {
+      transition: 200ms ease-in left;
     }
 
-    .example-leave {
-      opacity: 1;
+    .push-enter{
+      left: 100%;
     }
 
-    .example-leave.example-leave-active {
-      opacity: 0.01;
-      transition: opacity 300ms ease-in;
+    .push-enter.push-enter-active {
+      left: 0;
+    }
+
+    .push-leave {
+      left: 0;
+    }
+
+    .push-leave.push-leave-active{
+      left: 100%;
     }
   </style>
 

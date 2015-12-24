@@ -3,6 +3,7 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import SecondView from './SecondView';
 import DialogActions from '../actions/Dialog';
+import FirstViewStore from '../stores/FirstView';
 
 export default class FirstView extends React.Component
 {
@@ -11,13 +12,21 @@ export default class FirstView extends React.Component
     this.state = {};
   }
 
-  handleAddButton(e){
-    this.props.onAddChild(SecondView);
+  pushSecondView(e){
+    DialogActions.pushView(SecondView);
   }
 
   onClickClose(e){
     console.log('On click close in view');
     DialogActions.close();
+  }
+
+  componentWillMount() {
+    FirstViewStore.component = this;
+  }
+
+  componentWillUnmount() {
+    FirstViewStore.component = null;
   }
 
   render() {
@@ -28,7 +37,7 @@ export default class FirstView extends React.Component
         </div>
         <div className="panel-body">
           <p>First View body</p>
-          <button className="btn btn-primary" onClick={this.handleAddButton.bind(this)}>追加</button>
+          <button className="btn btn-primary" onClick={this.pushSecondView.bind(this)}>追加</button>
         </div>
       </div>
     );
