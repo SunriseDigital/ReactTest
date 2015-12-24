@@ -1,10 +1,11 @@
 import Dialog from './components/Dialog';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import DialogActions from './actions/Dialog';
 
 $(function(){
-  var dialog = ReactDOM.render(<Dialog />, document.getElementById('dialog-wrapper'));
+  ReactDOM.render(<Dialog />, document.getElementById('dialog-wrapper'));
   $('.btn.open').on('click', function(e){
-    dialog.open();
+    DialogActions.open();
   });
 });

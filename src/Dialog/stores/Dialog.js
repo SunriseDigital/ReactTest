@@ -5,24 +5,39 @@ class DialogStore extends Events.EventEmitter
 {
   constructor() {
     super();
-    var self = this;
-    this.dispatchToken = Dispatcher.register(this.handleDispatch.bind(this));
+    this.isOpen = false;
+    this.dispatchToken = Dispatcher.register(function(payload){
+      console.log('call handler in store');
+      var methodName = 'handle' + payload.type;
+      if(!this[methodName]){
+        throw 'Missing handling method '+ methodName;
+      }
+      this[methodName](payload);
+    }.bind(this));
   }
 
-  handleDispatch(payload) {
-    switch(payload.type){
-      case 'CloseDialog':
-        this.emit('close');
-        break;
-    }
+  handleCloseDialog(payload){
+    this.isOpen = false;
+    this.emit('change');
   }
 
-  addCloseListener(callback) {
-      this.on('close', callback);
+  handleOpenDialog(payload){
+    this.isOpen = true;
+    this.emit('change');
   }
 
-  removeCloseListener(callback) {
-      this.off('close', callback);
+  getState(){
+    return {
+      'isOpen': this.isOpen
+    };
+  }
+
+  addChangeListener(callback) {
+      this.on('change', callback);
+  }
+
+  removeChangeListener(callback) {
+      this.off('change', callback);
   }
 }
 

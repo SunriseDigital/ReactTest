@@ -3,42 +3,35 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import FirstView from './FirstView';
 import DialogStore from '../stores/Dialog';
-console.log(DialogStore);
 
 export default class Dialog extends React.Component
 {
   constructor(props) {
     super(props);
-    this.state = {
-      shouldHide: true,
-      children: []
-    };
+    this.state = DialogStore.getState();
   }
 
-  addChild(childView){
-    this.setState({children: [childView]});
-  }
+  // addChild(childView){
+  //   this.setState({children: [childView]});
+  // }
 
-  open(){
-    this.setState({shouldHide: false});
-  }
-
-  close(){
-    this.setState({shouldHide: true});
+  onStoreChange(){
+    this.setState(DialogStore.getState());
   }
 
   componentWillMount() {
-      DialogStore.addCloseListener(this.close.bind(this));
+      DialogStore.addChangeListener(this.onStoreChange.bind(this));
   }
 
   componentWillUnmount() {
-      DialogStore.removeCloseListener(this.close.bind(this));
+      DialogStore.removeChangeListener(this.onStoreChange.bind(this));
   }
 
   render(){
+    console.log('update view state');
     var dialogClass = classNames({
       'dialog': true,
-      'hidden': this.state.shouldHide
+      'hidden': !this.state.isOpen
     });
 
     var key = 0;
@@ -54,10 +47,6 @@ export default class Dialog extends React.Component
         onStop={this.handleStop}>
         <div className={dialogClass} ref="wrapper">
             <FirstView onAddChild={this.addChild.bind(this)} />
-            {this.state.children.map(function(ChildView){
-                var key = key + 1;
-                return (<ChildView key={key} />);
-            })}
         </div>
       </Draggable>
     );

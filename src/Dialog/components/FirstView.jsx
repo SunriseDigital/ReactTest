@@ -16,6 +16,7 @@ export default class FirstView extends React.Component
   }
 
   onClickClose(e){
+    console.log('On click close in view');
     DialogActions.close();
   }
 
