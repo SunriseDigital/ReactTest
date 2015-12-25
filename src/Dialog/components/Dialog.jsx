@@ -12,10 +12,6 @@ export default class Dialog extends React.Component
     this.state = DialogStore.getState();
   }
 
-  // addChild(childView){
-  //   this.setState({children: [childView]});
-  // }
-
   onStoreChange(){
     this.setState(DialogStore.getState());
   }
@@ -46,7 +42,7 @@ export default class Dialog extends React.Component
         onStart={this.handleStart}
         onDrag={this.handleDrag}
         onStop={this.handleStop}>
-        <div className={dialogClass} ref="wrapper">
+        <div className={dialogClass}>
             <FirstView />
             <ReactCSSTransitionGroup transitionName="push" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
             {this.state.children.map(function(View, key){
