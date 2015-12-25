@@ -35,7 +35,7 @@ export default class Dialog extends React.Component
     return (
       <Draggable
         // axis="x"
-        handle=".panel-heading"
+        handle=".panel-heading, .panel-heading *"
         start={{x: 0, y: 0}}
         // grid={[25, 25]}
         zIndex={100}

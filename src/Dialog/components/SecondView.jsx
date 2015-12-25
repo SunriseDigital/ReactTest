@@ -1,7 +1,4 @@
-import classNames from 'classnames';
 import React from 'react';
-import FirstViewStore from '../stores/FirstView';
-import ReactDOM from 'react-dom';
 import DialogActions from '../actions/Dialog';
 import Frame from './Frame.jsx';
 
@@ -12,15 +9,15 @@ export default class SecondView extends React.Component
     super(props);
   }
 
-  popView(){
-    DialogActions.popView();
+  pushSecondView(e){
+    DialogActions.pushView(SecondView);
   }
 
   render() {
     return (
-      <Frame title="Second View">
+      <Frame title="Second View" enableBackButton={true}>
         <p>Second View body</p>
-        <button className="btn btn-primary" onClick={this.popView.bind(this)}>閉じる</button>
+        <button className="btn btn-primary" onClick={this.pushSecondView.bind(this)}>追加</button>
       </Frame>
     );
   }
