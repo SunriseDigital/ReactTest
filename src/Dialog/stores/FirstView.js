@@ -1,28 +1,16 @@
-import Events from 'events';
-import Dispatcher from '../AppDispatcher';
+import BaseStore from './BaseStore.js';
 
-class FirstViewStore extends Events.EventEmitter
+class FirstViewStore extends BaseStore
 {
   constructor() {
     super();
     this.component = null;
-    this.dispatchToken = Dispatcher.register(function(payload){
-      Dispatcher.callHandler(this, payload);
-    }.bind(this));
   }
 
   getState(){
     return {
 
     };
-  }
-
-  addChangeListener(callback) {
-      this.on('change', callback);
-  }
-
-  removeChangeListener(callback) {
-      this.off('change', callback);
   }
 }
 

@@ -1,15 +1,11 @@
-import Events from 'events';
-import Dispatcher from '../AppDispatcher';
+import BaseStore from './BaseStore.js';
 
-class DialogStore extends Events.EventEmitter
+class DialogStore extends BaseStore
 {
   constructor() {
     super();
     this.isOpen = false;
     this.children = [];
-    this.dispatchToken = Dispatcher.register(function(payload){
-      Dispatcher.callHandler(this, payload);
-    }.bind(this));
   }
 
   handleCloseDialog(payload){
@@ -37,14 +33,6 @@ class DialogStore extends Events.EventEmitter
       'isOpen': this.isOpen,
       'children': this.children
     };
-  }
-
-  addChangeListener(callback) {
-      this.on('change', callback);
-  }
-
-  removeChangeListener(callback) {
-      this.off('change', callback);
   }
 }
 
