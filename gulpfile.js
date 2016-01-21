@@ -35,4 +35,23 @@ gulp.task('watch', function() {
   gulp.watch(['src/Dialog/*', 'src/Dialog/**/*'], ['dialog']);
 });
 
+
+gulp.task('build-immutable', function() {
+  browserify('src/immutable.js', {
+      debug: true
+    })
+    .transform("babelify", {presets: ["es2015"]})
+    .bundle()
+    .on("error", function (err) {
+      console.log('');
+      console.log(err.message);
+      console.log('' + err.codeFrame)
+    })
+    .pipe(fs.createWriteStream("js/immutable.js"))
+});
+
+gulp.task('watch-immutable', function() {
+  gulp.watch(['src/immutable.js'], ['build-immutable']);
+});
+
 gulp.task('default', ['dialog', 'watch', 'webserver']);
